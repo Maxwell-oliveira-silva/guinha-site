@@ -1,0 +1,11 @@
+# Apache (hospedagem compartilhada) — SPA fallback.
+# Qualquer rota que não seja arquivo existente entrega o index.html, e o
+# roteador do front decide o que renderizar. Sem isso, /rastrear dá 404.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>

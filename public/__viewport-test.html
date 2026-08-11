@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bancada de viewport — apagar antes de publicar</title>
+    <style>
+      body { margin: 0; background: #22252a; font: 12px monospace; color: #9aa0a6; }
+      .row { display: flex; gap: 16px; padding: 16px; align-items: flex-start; overflow-x: auto; }
+      figure { margin: 0; }
+      figcaption { padding: 6px 2px; }
+      iframe { border: 1px solid #444; background: #000; display: block; }
+      nav { padding: 16px 16px 0; display: flex; gap: 12px; flex-wrap: wrap; }
+      nav a { color: #f4d35e; }
+      nav a[aria-current] { color: #fff; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <!-- Use ?rota=/rastrear para testar outra página nos mesmos tamanhos. -->
+    <nav id="rotas"></nav>
+    <div class="row" id="telas"></div>
+
+    <script>
+      const rota = new URLSearchParams(location.search).get('rota') || '/'
+      const rotas = ['/', '/rastrear', '/rastrear?codigo=GUI-2026-000001', '/admin/rastreamentos']
+      const tamanhos = [
+        [390, 844, 'iPhone'],
+        [360, 800, 'Android comum'],
+        [768, 900, 'tablet'],
+        [1280, 900, 'notebook'],
+      ]
+
+      document.getElementById('rotas').innerHTML = rotas
+        .map(
+          (r) =>
+            `<a href="?rota=${encodeURIComponent(r)}"${r === rota ? ' aria-current="page"' : ''}>${r}</a>`,
+        )
+        .join('')
+
+      document.getElementById('telas').innerHTML = tamanhos
+        .map(
+          ([w, h, nome]) =>
+            `<figure><figcaption>${w} × ${h} — ${nome}</figcaption>
+             <iframe src="${rota}" width="${w}" height="${h}" title="${w}"></iframe></figure>`,
+        )
+        .join('')
+    </script>
+  </body>
+</html>

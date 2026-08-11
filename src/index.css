@@ -1,0 +1,151 @@
+@import 'tailwindcss';
+
+/*
+  Sistema visual — Guinha Transportes
+  ------------------------------------
+  Paleta extraída da identidade real: o preto do logotipo Guinha, o vermelho da
+  Transjovina e o amarelo das faixas de rodovia. O logotipo da Guinha é
+  literalmente uma estrada (o "g" vira uma pista com faixas tracejadas) — esse
+  tracejado é o motivo estrutural que costura o site inteiro.
+*/
+
+@theme {
+  --font-display: 'Archivo', 'Helvetica Neue', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-data: 'JetBrains Mono', ui-monospace, monospace;
+
+  --color-ink: #0a0b0d;
+  --color-ink-soft: #121417;
+  --color-ink-elevated: #1a1d21;
+  --color-asphalt: #26292e;
+  --color-line: #2f3339;
+
+  --color-paper: #f4f3f1;
+  --color-steel: #8a9099;
+  --color-steel-dim: #5d636b;
+
+  --color-brand-red: #d21f3c;
+  --color-brand-red-dark: #9c1729;
+  --color-brand-red-light: #ff4a63;
+
+  --color-signal: #f4d35e;
+  /* Verde de "entregue" — único estado do rastreamento que precisa se
+     distinguir do amarelo de rodovia sem competir com o vermelho da marca. */
+  --color-go: #3fb27f;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-ink);
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-brand-red);
+    color: white;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@utility eyebrow {
+  font-family: var(--font-data);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-brand-red-light);
+}
+
+/* Motivo estrutural: a faixa tracejada da rodovia, tirada do próprio logotipo */
+@utility road-rule {
+  height: 2px;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-steel-dim) 0 22px,
+    transparent 22px 44px
+  );
+}
+
+/* Entrada discreta dos itens da linha do tempo do rastreamento.
+   O bloco de prefers-reduced-motion abaixo já a neutraliza. */
+@keyframes guinha-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility rise-in {
+  animation: guinha-rise 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+/* Pulso do marcador "etapa atual" — o único ponto que se mexe na timeline. */
+@keyframes guinha-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(244 211 94 / 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgb(244 211 94 / 0);
+  }
+}
+
+@utility pulse-signal {
+  animation: guinha-pulse 2.2s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-asphalt);
+  border-radius: 999px;
+  border: 2px solid var(--color-ink);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-red-dark);
+}

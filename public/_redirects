@@ -1,0 +1,4 @@
+# Netlify / Cloudflare Pages — SPA fallback.
+# Sem isso, abrir /rastrear direto (link do WhatsApp, F5 na página) devolve 404
+# do servidor, porque só existe um index.html no build.
+/*    /index.html   200

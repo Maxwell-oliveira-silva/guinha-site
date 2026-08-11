@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Área administrativa: não faz sentido no índice de busca.
+Disallow: /admin/
+
+# A consulta de um código específico é sempre privada do cliente.
+Disallow: /rastrear?
+
+Sitemap: https://www.guinhatransportes.com.br/sitemap.xml
