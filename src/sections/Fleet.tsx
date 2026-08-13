@@ -18,12 +18,12 @@ export function Fleet() {
       <Container>
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <SectionHeading
-            eyebrow="A frota de verdade"
+            eyebrow="Sem produção"
             title={
               <>
-                Sem render.
+                Foto nossa.
                 <br />
-                <span className="text-brand-red">Sem estúdio.</span>
+                <span className="text-brand-red">Caminhão nosso.</span>
               </>
             }
           />
